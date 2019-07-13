@@ -1,4 +1,4 @@
-package file_reader
+package filereader
 
 import (
 	"bytes"
@@ -8,11 +8,22 @@ import (
 )
 
 type Csv struct {
-	fileReader *FileReader
+	fileReader   *FileReader
 	colSeparator rune
-	columns []string
-	rowCounter int64
-	reader *csv.Reader
+	columns      []string
+	rowCounter   int
+	reader       *csv.Reader
+}
+
+func NewCsvFileReader(filePath string) *Csv {
+	fileReader := &FileReader{}
+	fileReader.SetPath(filePath)
+
+	return &Csv{
+		fileReader:   fileReader,
+		colSeparator: ';',
+		rowCounter:   0,
+	}
 }
 
 func (c *Csv) SetColSeparator(colSep rune) {
@@ -43,7 +54,7 @@ func (c *Csv) GetNextDataSet() ([]string, error) {
 	if c.reader == nil {
 		c.reader = c.getNewCsvReader()
 	}
-	c.reader.Comma = c.colSeparator
+	//c.reader.Comma = c.colSeparator
 
 	return c.reader.Read()
 }

@@ -1,4 +1,4 @@
-package file_reader
+package filereader
 
 import (
 	"log"
@@ -6,13 +6,8 @@ import (
 )
 
 type FileReader struct {
-	filePath string
+	filePath    string
 	fileHandler *os.File
-}
-
-type FileReaderInterface interface {
-	SetPath(path string)
-	GetPath() string
 }
 
 func (f *FileReader) SetPath(path string) {
