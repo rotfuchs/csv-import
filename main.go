@@ -1,9 +1,8 @@
 package main
 
 import (
-	filereader "csv-import/FileReader"
+	"csv-import/DataImporter"
 	"fmt"
-	"io"
 	"log"
 	"runtime"
 )
@@ -11,30 +10,36 @@ import (
 func main() {
 	PrintMemUsage()
 
-	csvFileReader := filereader.NewCsvFileReader("test/test.csv")
-
-	count, err := csvFileReader.Count()
+	db, err := DataImporter.NewDb()
 	if err != nil {
-		fmt.Print(err)
+		log.Fatal(err)
 	}
-	fmt.Printf("\nrow count %v\n", count)
+	fmt.Printf("%+v\n", db.Connection.Stats())
 
-	var records [][]string
-	for {
-		record, err := csvFileReader.GetNextDataSet()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			log.Fatal(err)
-		}
-		records = append(records, record)
-	}
-	if err != nil {
-		fmt.Print(err)
-	}
-
-	fmt.Printf("\nrecords length %v\n", len(records))
+	//csvFileReader := filereader.NewCsvFileReader("test/test.csv")
+	//
+	//count, err := csvFileReader.Count()
+	//if err != nil {
+	//	fmt.Print(err)
+	//}
+	//fmt.Printf("\nrow count %v\n", count)
+	//
+	//var records [][]string
+	//for {
+	//	record, err := csvFileReader.GetNextDataSet()
+	//	if err == io.EOF {
+	//		break
+	//	}
+	//	if err != nil {
+	//		log.Fatal(err)
+	//	}
+	//	records = append(records, record)
+	//}
+	//if err != nil {
+	//	fmt.Print(err)
+	//}
+	//
+	//fmt.Printf("\nrecords length %v\n", len(records))
 
 	PrintMemUsage()
 }
